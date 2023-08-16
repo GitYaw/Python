@@ -6,7 +6,9 @@ from PyQt5.QtGui import QCursor
 
 widgets = {
 	"logo": [],
-	"button": []
+	"button": [],
+	"score": [],
+	"question": []
 }
 
 app = QApplication(sys.argv)
@@ -41,10 +43,38 @@ def frame1():
 	)
 	widgets["button"].append(button)
 
-	grid.addWidget(widgets["logo"][-1], 0, 0)
-	grid.addWidget(widgets["button"][-1], 1, 0)
+	grid.addWidget(logo, 0, 0)
+	grid.addWidget(button, 1, 0)
 
-frame1()
+def frame2():
+	score = QLabel("80")
+	score.setAlignment(QtCore.Qt.AlignRight)
+	score.setStyleSheet(
+		"font-size: 35px; " +
+		"color: 'white'; " +
+		"padding: 25px 20px 0px 20px; " +
+		"margin: 20px 200px; " +
+		"background: '#64A314'; " +
+		"border: 1px solid '#64A314'; " +
+		"border-radius: 45px;"
+	)
+	widgets["score"].append(score)
+	
+	question = QLabel("Placeholder for text of the trivia question")
+	question.setAlignment(QtCore.Qt.AlignCenter)
+	question.setWordWrap(True)
+	question.setStyleSheet(
+		"font-family: Shanti; " +
+		"font-size: 25px; " +
+		"color: 'white'; " +
+		"padding: 75px; "
+	)
+	widgets["question"].append(question)
+
+	grid.addWidget(score, 0, 1)
+	grid.addWidget(question, 1, 0, 1, 2)
+	
+frame2()
 
 window.setLayout(grid)
 

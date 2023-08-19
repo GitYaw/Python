@@ -8,7 +8,11 @@ widgets = {
 	"logo": [],
 	"button": [],
 	"score": [],
-	"question": []
+	"question": [],
+	"answer1": [],
+	"answer2": [],
+	"answer3": [],
+	"answer4": []
 }
 
 app = QApplication(sys.argv)
@@ -19,6 +23,24 @@ window.move(200, 200)
 window.setStyleSheet("background: #161219;")
 
 grid = QGridLayout()
+
+def answerButton(answer, left, right):
+	button = QPushButton(answer)
+	button.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+	button.setFixedWidth(485)
+	button.setStyleSheet(
+		"*{border: 4px solid '#BC006C'; " +
+		"margin-left: " + str(left) + "px; " + 
+		"margin-right: " + str(right) + "px; " + 
+		"color: white; " +
+		"font-family: 'shanti'; " +
+		"font-size: 16px; " +
+		"border-radius: 25px; " +
+		"padding: 15px 0px; " +
+		"margin-top: 20px;} " +
+		"*:hover{background: '#BC006C';}"
+	)
+	return button
 
 def frame1():
 	# display logo
@@ -52,11 +74,11 @@ def frame2():
 	score.setStyleSheet(
 		"font-size: 35px; " +
 		"color: 'white'; " +
-		"padding: 25px 20px 0px 20px; " +
+		"padding: 15px 10px; " +
 		"margin: 20px 200px; " +
 		"background: '#64A314'; " +
 		"border: 1px solid '#64A314'; " +
-		"border-radius: 45px;"
+		"border-radius: 35px;"
 	)
 	widgets["score"].append(score)
 	
@@ -71,8 +93,30 @@ def frame2():
 	)
 	widgets["question"].append(question)
 
+	button1 = answerButton("answer1", 85, 5)
+	button2 = answerButton("answer2", 5, 85)
+	button3 = answerButton("answer3", 85, 5)
+	button4 = answerButton("answer4", 5, 85)
+
+	widgets["answer1"].append(button1)
+	widgets["answer2"].append(button2)
+	widgets["answer3"].append(button3)
+	widgets["answer4"].append(button4)
+
+	image = QPixmap("logo_bottom.png")
+	logo = QLabel()
+	logo.setPixmap(image)
+	logo.setAlignment(QtCore.Qt.AlignCenter)
+	logo.setStyleSheet("margin-top: 75px; margin-bottom: 30px;")
+	widgets["logo"].append(logo)
+	
 	grid.addWidget(score, 0, 1)
 	grid.addWidget(question, 1, 0, 1, 2)
+	grid.addWidget(button1, 2, 0,)
+	grid.addWidget(button2, 2, 1)
+	grid.addWidget(button3, 3, 0)
+	grid.addWidget(button4, 3, 1)
+	grid.addWidget(logo, 4, 0, 1, 2)
 	
 frame2()
 

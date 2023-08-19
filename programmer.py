@@ -24,6 +24,21 @@ window.setStyleSheet("background: #161219;")
 
 grid = QGridLayout()
 
+def clearWidgets():
+	for widget in widgets:
+		if widgets[widget] != []:
+			widgets[widget][-1].hide()
+		for i in range(0, len(widgets[widget])):
+			widgets[widget].pop()
+
+def showStart():
+	clearWidgets()
+	frame1()
+
+def startGame():
+	clearWidgets()
+	frame2()
+
 def answerButton(answer, left, right):
 	button = QPushButton(answer)
 	button.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
@@ -40,6 +55,7 @@ def answerButton(answer, left, right):
 		"margin-top: 20px;} " +
 		"*:hover{background: '#BC006C';}"
 	)
+	button.clicked.connect(showStart)
 	return button
 
 def frame1():
@@ -63,10 +79,11 @@ def frame1():
 		"margin: 100px 200px;} " +
 		"*:hover{background: '#BC006C';}"
 	)
+	button.clicked.connect(startGame)
 	widgets["button"].append(button)
 
-	grid.addWidget(logo, 0, 0)
-	grid.addWidget(button, 1, 0)
+	grid.addWidget(logo, 0, 0, 1, 2)
+	grid.addWidget(button, 1, 0, 1, 2)
 
 def frame2():
 	score = QLabel("80")
@@ -118,7 +135,7 @@ def frame2():
 	grid.addWidget(button4, 3, 1)
 	grid.addWidget(logo, 4, 0, 1, 2)
 	
-frame2()
+frame1()
 
 window.setLayout(grid)
 

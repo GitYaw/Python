@@ -2,7 +2,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget
 # function imports
-from functions import frame1, frame2, grid
+from functions import frame1, frame2, frame3, grid
 
 # initialize GUI application
 app = QApplication(sys.argv)
@@ -11,10 +11,10 @@ app = QApplication(sys.argv)
 window = QWidget()
 window.setWindowTitle("Who wants to be a programmer???")
 window.setFixedWidth(1000)
-window.move(200, 200)
+window.move(200, 20)
 window.setStyleSheet("background: #161219;")
 
-frame1()
+frame3()
 
 window.setLayout(grid)
 

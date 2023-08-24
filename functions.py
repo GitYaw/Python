@@ -44,12 +44,12 @@ def answerButton(answer, left, right):
 		"margin-right: " + str(right) + "px; " + 
 		'''
 		border: 4px solid '#BC006C';
-		color: white;
-		font-family: 'shanti';
-		font-size: 16px;
 		border-radius: 25px;
-		padding: 15px 0px;
+		color: white;
+		font-family: 'Shanti';
+		font-size: 16px;
 		margin-top: 20px;
+		padding: 15px 0px;
 		}
 		*:hover{
 			background: '#BC006C';
@@ -79,10 +79,10 @@ def frame1():
 		*{
 			border: 4px solid '#BC006C';
 			border-radius: 45px;
-			font-size: 35px;
 			color: 'white';
-			padding: 25px 0px;
+			font-size: 35px;
 			margin: 100px 200px;
+			padding: 25px 0px;
 		}
 		*:hover{
 			background: '#BC006C';
@@ -107,13 +107,13 @@ def frame2():
 	score.setAlignment(QtCore.Qt.AlignRight)
 	score.setStyleSheet(
 		'''
-		font-size: 35px;
-		color: 'white';
-		padding: 15px 10px;
-		margin: 20px 200px;
 		background: '#64A314';
 		border: 1px solid '#64A314';
 		border-radius: 35px;
+		color: 'white';
+		font-size: 35px;
+		padding: 15px 10px;
+		margin: 20px 200px;
 		'''
 	)
 	widgets["score"].append(score)
@@ -124,9 +124,9 @@ def frame2():
 	question.setWordWrap(True)
 	question.setStyleSheet(
 		'''
-		font-family: 'shanti';
-		font-size: 25px;
 		color: 'white';
+		font-family: 'Shanti';
+		font-size: 25px;
 		padding: 75px;
 		'''
 	)
@@ -159,3 +159,73 @@ def frame2():
 	grid.addWidget(button3, 3, 0)
 	grid.addWidget(button4, 3, 1)
 	grid.addWidget(logo, 4, 0, 1, 2)
+
+#****************************************
+#				FRAME 3
+#****************************************
+
+def frame3():
+	# retry widget
+	message = QLabel("Sorry, your answer\nwas wrong. \nYour score is:")
+	message.setAlignment(QtCore.Qt.AlignRight)
+	message.setStyleSheet(
+		'''
+		color: 'white';
+		font-family: 'Shanti';
+		font-size: 35px;
+		margin: 75px 5px;
+		padding: 20px;
+		'''
+	)
+	widgets["message"].append(message)
+
+	# score widget
+	score = QLabel("50")
+	score.setStyleSheet(
+		'''
+		color: white;
+		font-size: 100px;
+		margin: 0 75px 0px 75px;
+		'''
+	)
+	widgets["score"].append(score)
+
+	# continue button widget
+	button = QPushButton('TRY AGAIN')
+	button.setStyleSheet(
+		'''*{
+			background:'#BC006C';
+			border: 1px solid '#BC006C';
+			border-radius: 40px;
+			color: 'white';
+			font-family: 'Arial';
+			font-size: 25px;
+			margin: 10px 300px;
+			padding: 25px 0px;
+		}
+		*:hover{
+			background:'#FF1B9E';
+		}'''
+	)
+	button.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+	widgets["button"].append(button)
+
+	# footer logo widget
+	pixmap = QPixmap('logo_bottom.png')
+	logo = QLabel()
+	logo.setPixmap(pixmap)
+	logo.setAlignment(QtCore.Qt.AlignCenter)
+	logo.setStyleSheet(
+		'''
+		margin-bottom: 20px;
+		margin-top: 75px;
+		padding: 10px;
+		'''
+	)
+	widgets["logo"].append(logo)
+
+	# place widgets on grid
+	grid.addWidget(message, 0, 0)
+	grid.addWidget(score, 0, 1)
+	grid.addWidget(button, 1, 0, 1, 2)
+	grid.addWidget(logo, 2, 0, 1, 2)

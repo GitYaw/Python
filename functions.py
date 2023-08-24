@@ -229,3 +229,87 @@ def frame3():
 	grid.addWidget(score, 0, 1)
 	grid.addWidget(button, 1, 0, 1, 2)
 	grid.addWidget(logo, 2, 0, 1, 2)
+
+#****************************************
+#				FRAME 4
+#****************************************
+
+def frame4():
+	# celebration widget
+	message = QLabel("Congratulations! You\nare a true programmer!\nYour score is:")
+	message.setAlignment(QtCore.Qt.AlignRight)
+	message.setStyleSheet(
+		'''
+		color: 'white';
+		font-family: 'Shanti';
+		font-size: 25px;
+		margin: 100px 0px;
+		'''
+	)
+	widgets["message"].append(message)
+
+	# score widget
+	score = QLabel("100")
+	score.setStyleSheet(
+		'''
+		color: #8FC740;
+		font-size: 100px;
+		margin: 0px 75px 0px 75px;
+		'''
+	)
+	widgets["score"].append(score)
+
+	# continue widget
+	message2 = QLabel("Would you like to try again?")
+	message2.setAlignment(QtCore.Qt.AlignCenter)
+	message2.setStyleSheet(
+		'''
+		color: 'white';
+		font-family: 'Shanti';
+		font-size: 30px;
+		margin-bottom: 75px;
+		margin-top: 0px;
+		'''
+	)
+	widgets["message2"].append(message2)
+
+	# continue button widget
+	button = QPushButton('Try Again')
+	button.setStyleSheet(
+		'''*{
+			background:'#BC006C';
+			color: 'white';
+			border: 1px solid '#BC006C';
+			border-radius: 40px;
+			font-family: 'Shanti';
+			font-size: 25px;
+			margin: 10px 300px;
+			padding: 25px 0px;
+		}
+		*:hover{
+			background:'#FF1B9E';
+		}'''
+	)
+	button.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+	widgets["button"].append(button)
+
+	# footer logo widget
+	pixmap = QPixmap('logo_bottom.png')
+	logo = QLabel()
+	logo.setPixmap(pixmap)
+	logo.setAlignment(QtCore.Qt.AlignCenter)
+	logo.setStyleSheet(
+		'''
+		margin-bottom: 20px;
+		margin-top: 75px;
+		padding: 10px;
+		'''
+	)
+	widgets["logo"].append(logo)
+
+	# place widgets on grid
+	grid.addWidget(message, 0, 0)
+	grid.addWidget(score, 0, 1)
+	grid.addWidget(message2, 1, 0, 1, 2)
+	grid.addWidget(button, 2, 0, 1, 2)
+	grid.addWidget(logo, 3, 0, 1, 2)

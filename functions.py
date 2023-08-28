@@ -21,8 +21,8 @@ def loadQuestion(number):
 		("#039;", "'"),
 		("&'", "'"),
 		("&quot;", '"'),
-		("&lt;", "less than SYMBOL"),
-		("&gt;", "greater than SYMBOL")
+		("&lt;", "<"),
+		("&gt;", ">")
 	]
 
 	for tuple in formatting:
@@ -38,6 +38,8 @@ def loadQuestion(number):
 
 	for i in range(4):
 		parameters["answer" + str(i + 1)].append(answers[i])
+	
+	print(correct) # for testing
 
 parameters = {
 	"number": 0,
@@ -73,12 +75,18 @@ def clearWidgets():
 	for widget in widgets:
 		if widgets[widget] != []:
 			widgets[widget][-1].hide()
-		for i in range(0, len(widgets[widget])):
-			widgets[widget].pop()
+		widgets[widget].clear()
+
+def clearParameters():
+	for parameter in parameters:
+		if type(parameters[parameter]) == list:
+			parameters[parameter].clear()
+	
+	parameters["number"] = 0
+	parameters["score"] = 0
 
 def startGame():
-	# start game, reset all widgets
-	clearWidgets()
+	clearParameters()
 
 	random.shuffle(order)
 	loadQuestion(order[parameters["number"]])
@@ -135,6 +143,8 @@ def checkAnswer(button):
 #****************************************
 
 def frame1():
+	clearWidgets()
+
 	# logo widget
 	image = QPixmap("logo.png")
 	logo = QLabel()
@@ -174,6 +184,8 @@ def frame1():
 #****************************************
 
 def frame2():
+	clearWidgets()
+
 	# score widget
 	score = QLabel(str(parameters["score"]))
 	score.setAlignment(QtCore.Qt.AlignRight)
@@ -282,6 +294,7 @@ def frame3():
 		}'''
 	)
 	button.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+	button.clicked.connect(frame1)
 	widgets["button"].append(button)
 
 	# footer logo widget
@@ -367,6 +380,7 @@ def frame4():
 		}'''
 	)
 	button.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+	button.clicked.connect(frame1)
 	widgets["button"].append(button)
 
 	# footer logo widget

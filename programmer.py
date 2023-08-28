@@ -10,7 +10,8 @@ app = QApplication(sys.argv)
 # window settings
 window = QWidget()
 window.setWindowTitle("Who wants to be a programmer???")
-window.setFixedWidth(1000)
+window.setMinimumWidth(1000)
+window.setMinimumHeight(680)
 window.move(200, 20)
 window.setStyleSheet("background: #161219;")
 

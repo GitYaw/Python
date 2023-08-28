@@ -16,6 +16,19 @@ def preloadData():
 	correct = df["correct_answer"][0]
 	wrong = df["incorrect_answers"][0]
 
+	formatting = [
+		("#039;", "'"),
+		("&'", "'"),
+		("&quot;", '"'),
+		("&lt;", "less than SYMBOL"),
+		("&gt;", "greater than SYMBOL")
+	]
+
+	for tuple in formatting:
+		question = question.replace(tuple[0], tuple[1])
+		correct = correct.replace(tuple[0], tuple[1])
+		wrong = [answer.replace(tuple[0], tuple[1]) for answer in wrong]
+
 	parameters["question"].append(question)
 	parameters["correct"].append(correct)
 
@@ -35,7 +48,6 @@ parameters = {
 }
 
 preloadData()
-print(parameters)
 
 # global dictionary of widgets
 widgets = {
@@ -154,7 +166,7 @@ def frame2():
 	widgets["score"].append(score)
 	
 	# trivia question widget
-	question = QLabel("Placeholder for the text of the trivia question")
+	question = QLabel(parameters["question"][-1])
 	question.setAlignment(QtCore.Qt.AlignCenter)
 	question.setWordWrap(True)
 	question.setStyleSheet(
@@ -168,10 +180,10 @@ def frame2():
 	widgets["question"].append(question)
 
 	# answer button widgets
-	button1 = answerButton("answer1", 85, 5)
-	button2 = answerButton("answer2", 5, 85)
-	button3 = answerButton("answer3", 85, 5)
-	button4 = answerButton("answer4", 5, 85)
+	button1 = answerButton(parameters["answer1"][-1], 85, 5)
+	button2 = answerButton(parameters["answer2"][-1], 5, 85)
+	button3 = answerButton(parameters["answer3"][-1], 85, 5)
+	button4 = answerButton(parameters["answer4"][-1], 5, 85)
 
 	widgets["answer1"].append(button1)
 	widgets["answer2"].append(button2)

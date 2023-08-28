@@ -1,6 +1,41 @@
 from PyQt5.QtWidgets import QGridLayout, QPushButton, QLabel
 from PyQt5.QtGui import QPixmap, QCursor
 from PyQt5 import QtCore
+from urllib.request import urlopen # accessing url
+import json # data in json format
+import pandas as pd # handling data
+import random
+
+url = "https://opentdb.com/api.php?amount=50&category=18&difficulty=medium&type=multiple"
+with urlopen(url) as webpage:
+	data = json.loads(webpage.read().decode())
+	df = pd.DataFrame(data["results"])
+
+def preloadData():
+	question = df["question"][0]
+	correct = df["correct_answer"][0]
+	wrong = df["incorrect_answers"][0]
+
+	parameters["question"].append(question)
+	parameters["correct"].append(correct)
+
+	answers = wrong + [correct]
+	random.shuffle(answers)
+
+	for i in range(4):
+		parameters["answer" + str(i + 1)].append(answers[i])
+
+parameters = {
+	"question": [],
+	"answer1": [],
+	"answer2": [],
+	"answer3": [],
+	"answer4": [],
+	"correct": []
+}
+
+preloadData()
+print(parameters)
 
 # global dictionary of widgets
 widgets = {

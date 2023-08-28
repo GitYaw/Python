@@ -10,11 +10,12 @@ url = "https://opentdb.com/api.php?amount=50&category=18&difficulty=medium&type=
 with urlopen(url) as webpage:
 	data = json.loads(webpage.read().decode())
 	df = pd.DataFrame(data["results"])
+	order = list(range(0, len(df)))
 
-def preloadData():
-	question = df["question"][0]
-	correct = df["correct_answer"][0]
-	wrong = df["incorrect_answers"][0]
+def loadQuestion(number):
+	question = df["question"][number]
+	correct = df["correct_answer"][number]
+	wrong = df["incorrect_answers"][number]
 
 	formatting = [
 		("#039;", "'"),
@@ -39,15 +40,15 @@ def preloadData():
 		parameters["answer" + str(i + 1)].append(answers[i])
 
 parameters = {
+	"number": 0,
 	"question": [],
 	"answer1": [],
 	"answer2": [],
 	"answer3": [],
 	"answer4": [],
-	"correct": []
+	"correct": [],
+	"score": 0,
 }
-
-preloadData()
 
 # global dictionary of widgets
 widgets = {
@@ -78,6 +79,9 @@ def clearWidgets():
 def startGame():
 	# start game, reset all widgets
 	clearWidgets()
+
+	random.shuffle(order)
+	loadQuestion(order[parameters["number"]])
 	frame2()
 
 def answerButton(answer, left, right):
@@ -103,7 +107,28 @@ def answerButton(answer, left, right):
 		}
 		'''
 	)
+	button.clicked.connect(lambda: checkAnswer(button))
 	return button
+
+def checkAnswer(button):
+	if button.text() == parameters["correct"][-1]:
+		score = parameters["score"] + 10
+		parameters["score"] = score
+		widgets["score"][-1].setText(str(score))
+
+		if score >= 100:
+			frame4()
+		else:
+			parameters["number"] += 1
+			loadQuestion(order[parameters["number"]])
+			widgets["question"][-1].setText(parameters["question"][-1])
+			widgets["answer1"][-1].setText(parameters["answer1"][-1])
+			widgets["answer2"][-1].setText(parameters["answer2"][-1])
+			widgets["answer3"][-1].setText(parameters["answer3"][-1])
+			widgets["answer4"][-1].setText(parameters["answer4"][-1])
+
+	else:
+		frame3()
 
 #****************************************
 #				FRAME 1
@@ -150,7 +175,7 @@ def frame1():
 
 def frame2():
 	# score widget
-	score = QLabel("80")
+	score = QLabel(str(parameters["score"]))
 	score.setAlignment(QtCore.Qt.AlignRight)
 	score.setStyleSheet(
 		'''
@@ -212,6 +237,8 @@ def frame2():
 #****************************************
 
 def frame3():
+	clearWidgets()
+
 	# retry widget
 	message = QLabel("Sorry, your answer\nwas wrong. \nYour score is:")
 	message.setAlignment(QtCore.Qt.AlignRight)
@@ -227,7 +254,7 @@ def frame3():
 	widgets["message"].append(message)
 
 	# score widget
-	score = QLabel("50")
+	score = QLabel(str(parameters["score"]))
 	score.setStyleSheet(
 		'''
 		color: white;
@@ -282,6 +309,8 @@ def frame3():
 #****************************************
 
 def frame4():
+	clearWidgets()
+
 	# celebration widget
 	message = QLabel("Congratulations! You\nare a true programmer!\nYour score is:")
 	message.setAlignment(QtCore.Qt.AlignRight)
@@ -296,7 +325,7 @@ def frame4():
 	widgets["message"].append(message)
 
 	# score widget
-	score = QLabel("100")
+	score = QLabel(str(parameters["score"]))
 	score.setStyleSheet(
 		'''
 		color: #8FC740;

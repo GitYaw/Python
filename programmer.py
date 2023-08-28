@@ -14,7 +14,7 @@ window.setFixedWidth(1000)
 window.move(200, 20)
 window.setStyleSheet("background: #161219;")
 
-frame2()
+frame1()
 
 window.setLayout(grid)
 
